@@ -75,7 +75,7 @@ export const Login = () => {
           </form>
           <p className="mt-4 text-center text-muted">
             ¿No tienes una cuenta?{" "}
-            <a href="/register" className="text-secondary hover:underline">
+            <a href="/auth/register" className="text-secondary hover:underline">
               Registro
             </a>
           </p>
