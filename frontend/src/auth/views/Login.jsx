@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router";
 
 export const Login = () => {
 
@@ -75,9 +76,9 @@ export const Login = () => {
           </form>
           <p className="mt-4 text-center text-muted">
             ¿No tienes una cuenta?{" "}
-            <a href="/auth/register" className="text-secondary hover:underline">
+            <Link to="/auth/register" className="text-secondary hover:underline">
               Registro
-            </a>
+            </Link>
           </p>
         </div>
       </div>
