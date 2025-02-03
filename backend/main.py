@@ -6,6 +6,7 @@ from fastapi.security import HTTPBearer  # type: ignore
 from bd.database import Session, engine, Base
 from models.user import User as UserModel
 from fastapi.encoders import jsonable_encoder  # type: ignore
+from fastapi.middleware.cors import CORSMiddleware  # type: ignore
 
 app = FastAPI(
     title='Flash4Devs API',
@@ -15,6 +16,17 @@ app = FastAPI(
 
 Base.metadata.create_all(bind=engine)
 
+origins = [
+    "http://localhost:5173", 
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins, 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class BearerJWT(HTTPBearer):
@@ -53,12 +65,14 @@ def register(user: UserRegister):
 @app.post('/api/login', tags=['Auth'])
 def login(user: UserLogin):
     db = Session()
-    data= db.query(UserModel).filter(UserModel.email == user.email).first()
-    if not data:
-        return JSONResponse(status_code = 404, content={'message', 'Email o contraseña incorrecta'})
-    if data.email == user.email and data.password == user.password:
-        token: str = createToken(user.dict())
-        return JSONResponse(status_code=200 ,content={'Token': token})
-    raise HTTPException(status_code=401, detail="Email o contraseña incorrecta")
-    db.close()
+    try:
+        data= db.query(UserModel).filter(UserModel.email == user.email).first()
+        if not data:
+            return JSONResponse(status_code=404, content={'message': 'Email o contraseña incorrecta'})
+        if data.email == user.email and data.password == user.password:
+            token: str = createToken(user.dict())
+            return JSONResponse(status_code=200 ,content={'Token': token})
+        raise HTTPException(status_code=401, detail="Email o contraseña incorrecta")
+    finally:
+        db.close()
 
