@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,8 @@ export const Register = () => {
     acceptTerms: false,
   });
 
+  let navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -18,12 +22,37 @@ export const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Formulário enviado:", formData);
-    //Adicionar aqui a lógica da API (O enviar a uma API o actualizar os dados Sergio)
-  };
+    const url = "http://127.0.0.1:8000/api/register";
 
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          name: formData.firstName,
+          last_name: formData.lastName,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        navigate("/auth/login");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   return (
     <div className="bg-background min-h-screen flex items-center justify-center">
       <div className="container mx-auto">
@@ -43,7 +72,7 @@ export const Register = () => {
               <div className="bg-gray-400/55 rounded-xl shadow-xl text-center">
                 <p className="text-white font-medium text-xl text-shadow shadow-black-500">
                   Prepárese para las entrevistas con{" "}
-                  <span class="font-bold text-accent">Flash4Devs</span>,
+                  <span className="font-bold text-accent">Flash4Devs</span>,
                   flashcards que van directo al grano. ¡Domina lo esencial y
                   convierte tu código en éxito!"{" "}
                 </p>
@@ -142,4 +171,3 @@ export const Register = () => {
     </div>
   );
 };
-

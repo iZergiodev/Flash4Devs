@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export const Login = () => {
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  let navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,13 +18,35 @@ export const Login = () => {
   };
 
   // Envio do form
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //Adicionar aqui a lógica da API (O enviar a uma API o actualizar os dados Sergio)
-    console.log("Dados do formulário:", formData);
-  
-  };
 
+    const url = "http://127.0.0.1:8000/api/login";
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          'email': formData.email,
+          'password': formData.password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   return (
     <>
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -76,7 +98,10 @@ export const Login = () => {
           </form>
           <p className="mt-4 text-center text-muted">
             ¿No tienes una cuenta?{" "}
-            <Link to="/auth/register" className="text-secondary hover:underline">
+            <Link
+              to="/auth/register"
+              className="text-secondary hover:underline"
+            >
               Registro
             </Link>
           </p>
