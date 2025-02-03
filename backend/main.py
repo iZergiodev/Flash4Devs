@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException, Depends # type: ignore
-from pydantic import BaseModel  # type: ignore
+from pydantic import BaseModel
+import uvicorn  # type: ignore
 from user_jwt import createToken, validateToken
 from fastapi.responses import JSONResponse  # type: ignore
 from fastapi.security import HTTPBearer  # type: ignore
@@ -7,6 +8,7 @@ from bd.database import Session, engine, Base
 from models.user import User as UserModel
 from fastapi.encoders import jsonable_encoder  # type: ignore
 from fastapi.middleware.cors import CORSMiddleware  # type: ignore
+import os
 
 app = FastAPI(
     title='Flash4Devs API',
@@ -76,3 +78,6 @@ def login(user: UserLogin):
     finally:
         db.close()
 
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
