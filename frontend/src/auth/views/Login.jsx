@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { Link, useNavigate } from "react-router";
-import Navbar from "../../components/Navbar";
+import {Navbar} from "../../components/Navbar";
 
 
 export const Login = () => {
@@ -52,7 +52,7 @@ export const Login = () => {
   };
   return (
     <>
-    <Navbar />
+    <Navbar/>
       <div className="min-h-screen flex items-center justify-center bg-background">
         
         <div className="bg-card/60 p-8 rounded-lg shadow-lg w-full max-w-md">
