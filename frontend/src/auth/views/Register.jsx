@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Navbar } from "../../components/Navbar";
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,8 @@ export const Register = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="bg-background min-h-screen flex items-center justify-center">
       <div className="container mx-auto">
         <div className="flex w-8/12 bg-card/60 rounded-xl mx-auto shadow-lg overflow-hidden">
@@ -140,6 +143,7 @@ export const Register = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
