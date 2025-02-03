@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import Navbar from "../../components/Navbar";
 
 export const Login = () => {
 
@@ -27,7 +28,9 @@ export const Login = () => {
 
   return (
     <>
+    <Navbar />
       <div className="min-h-screen flex items-center justify-center bg-background">
+        
         <div className="bg-card/60 p-8 rounded-lg shadow-lg w-full max-w-md">
           <h2 className="text-2xl font-bold mb-6 text-primary text-center">
             Login
