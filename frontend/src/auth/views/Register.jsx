@@ -32,10 +32,10 @@ export const Register = () => {
             className="w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center relative"
             style={{
               backgroundImage:
-                "url('https://weremote.net/wp-content/uploads/2022/04/programador-ordenadores-concentrado-1920x1281.jpg')",
+                "url('https://media.licdn.com/dms/image/v2/C4E12AQEHT5u1px0dlA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1569701360111?e=2147483647&v=beta&t=loOge5pA0qUHP8AdnNBsnkXklRnIjdOxhDTSFmvr3Aw')",
             }}
           >
-            <div className="absolute inset-0 bg-black/60"></div>
+            <div className="absolute inset-0 bg-black/50"></div>
             <div className="relative z-10">
               <h1 className="text-card text-3xl mb-5 font-semibold text-center">
                 ¡Bienvenido al bucle infinito de posibilidades!
